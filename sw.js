@@ -56,7 +56,7 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
 
     if (!(e.request.url.indexOf('http') === 0)) return;
-    
+
     const resp = caches.match(e.request).then(cache => {
         if (cache) {
             return cache;

@@ -16,7 +16,6 @@ function updateCacheDynamic(dynamicCache, req, res) {
     if (res.ok) {
         caches.open(dynamicCache).then((cache) => {
             cache.put(req, res.clone()).then(() => {
-                alert('hola 21')
                 cleanCaches(dynamicCache, 50);
             });
             return res;
