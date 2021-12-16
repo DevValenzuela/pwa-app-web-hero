@@ -4,11 +4,12 @@ var swLocation = '/pwa-app-web-hero/sw.js';
 
 
 if(navigator.serviceWorker){
+    
     if(url.includes('localhost')){
-        navigator.serviceWorker.register('/sw.js');
-    }else{
-        navigator.serviceWorker.register(swLocation);
+        swLocation ='/sw.js';
     }
+
+    navigator.serviceWorker.register(swLocation);
 }
 
 
