@@ -1,4 +1,3 @@
-
 importScripts('js/sw-util.js');
 
 const STATIC_CACHE = 'static-v1';
@@ -19,7 +18,7 @@ const APP_SHELL = [
     'js/sw-util.js'
 ];
 
-const  APP_SHELL_INMUTABLE = [
+const APP_SHELL_INMUTABLE = [
     'https://fonts.googleapis.com/css?family=Quicksand:300,400',
     'https://fonts.googleapis.com/css?family=Lato:400,300',
     'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
@@ -27,12 +26,12 @@ const  APP_SHELL_INMUTABLE = [
     'js/libs/jquery.js',
 ];
 
-self.addEventListener('install', (e) =>{
+self.addEventListener('install', (e) => {
 
     const cacheStatic = caches.open(STATIC_CACHE)
         .then(cache => cache.addAll(APP_SHELL));
 
-    const cacheInmutable =  caches.open(INMUTABLE_CACHE)
+    const cacheInmutable = caches.open(INMUTABLE_CACHE)
         .then(cache => cache.addAll(APP_SHELL_INMUTABLE));
 
 
@@ -42,11 +41,11 @@ self.addEventListener('install', (e) =>{
 
 self.addEventListener('activate', (e) => {
     const resp = caches.keys().then(keys => {
-        keys.forEach(key=>{
-            if(key !== STATIC_CACHE && key.includes('static')){
+        keys.forEach(key => {
+            if (key !== STATIC_CACHE && key.includes('static')) {
                 return caches.delete(key);
             }
-            if(key !== DYNAMIC_CACHE && key.includes('dynamic')){
+            if (key !== DYNAMIC_CACHE && key.includes('dynamic')) {
                 return caches.delete(key);
             }
         });
@@ -56,20 +55,19 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
 
-    if (!e.request.url.startsWith('http')){
-        const resp =  caches.match(e.request).then(cache => {
-            if(cache) {
-                return cache;
-            }else{
-                return fetch(e.request).then(newResp => {
-                    return updateCacheDynamic( DYNAMIC_CACHE, e.request, newResp );
-                });
-            }
-        });
+    if (!(e.request.url.indexOf('http') === 0)) return;
+    
+    const resp = caches.match(e.request).then(cache => {
+        if (cache) {
+            return cache;
+        } else {
+            return fetch(e.request).then(newResp => {
+                return updateCacheDynamic(DYNAMIC_CACHE, e.request, newResp);
+            });
+        }
+    });
 
-        e.respondWith(resp);
-    };
-
+    e.respondWith(resp);
 
 
 });
