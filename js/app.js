@@ -4,7 +4,7 @@ var swLocation = '/pwa-app-web-hero/sw.js';
 
 
 if(navigator.serviceWorker){
-    
+
     if(url.includes('localhost')){
         swLocation ='/sw.js';
     }
