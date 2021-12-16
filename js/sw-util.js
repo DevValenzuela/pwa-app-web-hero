@@ -1,4 +1,4 @@
-// Function Clean Cache
+
 function updateCacheDynamic(dynamicCache, req, res) {
     if (res.ok) {
         caches.open(dynamicCache).then((cache) => {
