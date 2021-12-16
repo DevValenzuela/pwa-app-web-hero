@@ -1,6 +1,14 @@
 
+var url = window.location.href;
+var swLocation = '/pwa-app-web-hero/sw.js';
+
+
 if(navigator.serviceWorker){
-    navigator.serviceWorker.register('/sw.js');
+    if(url.includes('localhost')){
+        navigator.serviceWorker.register('/sw.js');
+    }else{
+        navigator.serviceWorker.register(swLocation);
+    }
 }
 
 
